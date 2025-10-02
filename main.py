@@ -11,14 +11,14 @@ def calculate_sq_distance(x1, y1, x2, y2):
 pygame.init()
 
 WHITE=(255,255,255)
-SCREEN_WIDTH = 600
-SCREEN_HEIGHT = 600
+SCREEN_WIDTH = 1200
+SCREEN_HEIGHT = 800
 MERGE = 10
 START_NUM_DOTS = 10
-MIN_DOTS = 10
+MIN_DOTS = 20
 MAX_DIST = 500
 MAX_DIST_SQ = MAX_DIST**2
-FPS = 60
+FPS = 165
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("Network Art")
@@ -68,7 +68,7 @@ while running: #True
     screen.blit(alpha_surfaces, (0, 0))
 
     #Фильтрация списка dots
-    dots = [dot for dot in dots if not dot.is_at_target()]
+    dots = [dot for dot in dots if not dot.is_beyond_target_boundary()]
     #Автоматическое добавление новых точек
     if len(dots) < MIN_DOTS:
         dots.append(Dot(SCREEN_WIDTH, SCREEN_HEIGHT))

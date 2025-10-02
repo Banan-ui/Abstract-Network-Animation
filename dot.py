@@ -71,16 +71,18 @@ class Dot():
         self.y += self.unit_vector[1] * self.speed
 
 
-    def is_at_target(self):
-        """Проверяет достлигла ли основная точка (self.x, self.y) целевой точки target
-        с учетом погрешности. Возвращает True в случае истины"""
-        TOLERANCE=5.0 #Погрешность в пикселях
-
-        #Сравнения квадрата дистанций, для избежания изчесления корння квадратного
-        dx = self.target_x - self.x
-        dy = self.target_y - self.y
-        distance_sq = dx**2 + dy**2
-        return distance_sq <= TOLERANCE**2
+    def is_beyond_target_boundary(self):
+        """Проверяет, вышла ли точка за границу экрана на основе target_side"""
+        RADIUS = 5 #Приблизительный радиус точки (точка пропадала после полного исчезновения с экрана)
+        match self.target_side:
+            case "top":
+                return self.y < -RADIUS
+            case "bottom":
+                return self.y > self.screen_height+RADIUS
+            case "left":
+                return self.x < -RADIUS
+            case "right":
+                return self.x > self.screen_width+RADIUS
 
 
     def print_info(self):
